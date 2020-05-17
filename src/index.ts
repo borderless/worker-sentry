@@ -57,7 +57,7 @@ export interface SentryOptions {
  * Options allows while capturing an exception.
  */
 export interface CaptureExceptionOptions {
-  level?: string;
+  level?: "fatal" | "error" | "warning" | "info" | "debug";
   extra?: object;
   tags?: Record<string, string>;
   release?: string;
