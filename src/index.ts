@@ -69,6 +69,7 @@ export interface CaptureExceptionOptions {
   request?: {
     url?: string;
     method?: string;
+    headers?: Record<string, string>;
     query?: string;
   };
 }
@@ -127,6 +128,7 @@ export class Sentry {
           request: {
             url: options.request?.url,
             method: options.request?.method,
+            headers: options.request?.headers,
             query_string: options.request?.query,
           },
           server_name: options.serverName,
