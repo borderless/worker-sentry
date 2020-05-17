@@ -1,6 +1,6 @@
 {
   "name": "@borderless/worker-sentry",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Sentry client for Cloudflare Workers using `fetch` and V8 stack traces",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
