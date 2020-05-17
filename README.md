@@ -5,7 +5,7 @@
 [![Build status][travis-image]][travis-url]
 [![Test coverage][coveralls-image]][coveralls-url]
 
-> Sentry client for Cloudflare Workers using `fetch` and native V8 stack traces.
+> Sentry client for Cloudflare Workers using `fetch` and native [V8 stack traces](https://v8.dev/docs/stack-trace-api).
 
 ## Installation
 
