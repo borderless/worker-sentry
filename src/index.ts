@@ -29,12 +29,12 @@ interface CallSite {
  * Parse a stack trace from
  */
 export function getErrorStack(error: Error): CallSite[] {
-  const prepareStackTrace = Error.prepareStackTrace!;
+  const prepareStackTrace = Error.prepareStackTrace;
   let trace: CallSite[];
 
   Error.prepareStackTrace = (error, v8Trace) => {
     trace = v8Trace as CallSite[];
-    return prepareStackTrace(error, v8Trace);
+    return prepareStackTrace?.(error, v8Trace);
   };
 
   Error.captureStackTrace(error, getErrorStack);
@@ -82,7 +82,7 @@ export class Sentry {
 
   constructor(options: SentryOptions) {
     this.sentryUrl = new URL(options.dsn);
-    this.fetch = options.fetch || fetch;
+    this.fetch = options.fetch || fetch.bind(null);
   }
 
   /**
