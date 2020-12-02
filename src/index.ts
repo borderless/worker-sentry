@@ -11,7 +11,7 @@ export type Fetch = (request: Request) => Promise<Response>;
 interface CallSite {
   getThis(): any;
   getTypeName(): string | null;
-  getFunction(): Function | undefined;
+  getFunction(): (...args: any) => any | undefined;
   getFunctionName(): string | null;
   getMethodName(): string | null;
   getFileName(): string | null;
@@ -69,7 +69,7 @@ export interface CaptureExceptionOptions {
   /** The record severity. */
   level?: SentryLevel;
   /** An arbitrary mapping of additional metadata to store with the event. */
-  extra?: object;
+  extra?: Record<string, unknown>;
   /** A map or list of tags for this event. Each tag must be less than 200 characters. */
   tags?: Record<string, string>;
   /** The release version of the application. */
@@ -135,7 +135,7 @@ export interface CaptureExceptionOptions {
     /** If a message is provided, it is rendered as text with all whitespace preserved. Very long text might be truncated in the UI. */
     message?: string;
     /** Arbitrary data associated with this breadcrumb. */
-    data?: object;
+    data?: Record<string, unknown>;
     /** This defines the severity level of the breadcrumb. */
     level?: SentryLevel;
   }>;
@@ -167,7 +167,7 @@ export class Sentry {
           "User-Agent": "Cloudflare-Worker/1.0",
           "X-Sentry-Auth": `Sentry sentry_version=7, sentry_client=Cloudflare-Worker/1.0, sentry_key=${this.sentryUrl.username}`,
         },
-        /* eslint-disable @typescript-eslint/camelcase */
+        /* eslint-disable @typescript-eslint/naming-convention */
         body: JSON.stringify({
           logger: "worker",
           platform: "javascript",
@@ -216,7 +216,7 @@ export class Sentry {
           dist: options.dist,
           environment: options.environment,
         }),
-        /* eslint-enable @typescript-eslint/camelcase */
+        /* eslint-enable @typescript-eslint/naming-convention */
       }
     );
 
