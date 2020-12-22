@@ -28,9 +28,9 @@ interface CallSite {
 }
 
 /**
- * Parse a stack trace from
+ * Parse call sites from error instance.
  */
-export function getErrorStack(error: Error): CallSite[] {
+function getErrorStack(error: Error): CallSite[] {
   const prepareStackTrace = Error.prepareStackTrace;
   let trace: CallSite[];
 
@@ -40,8 +40,7 @@ export function getErrorStack(error: Error): CallSite[] {
   };
 
   Error.captureStackTrace(error, getErrorStack);
-  error.stack; // Trigger `prepareStackTrace`.
-
+  error.stack; // Triggers `prepareStackTrace`.
   Error.prepareStackTrace = prepareStackTrace;
 
   return trace!;
