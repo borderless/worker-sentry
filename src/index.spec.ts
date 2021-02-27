@@ -1,5 +1,5 @@
 import "cross-fetch/polyfill";
-import { Sentry, Fetch } from "./index";
+import { Sentry } from "./index";
 
 describe("worker sentry", () => {
   const dsn = "https://123@456.ingest.sentry.io/789";

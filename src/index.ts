@@ -30,7 +30,10 @@ interface CallSite {
 /**
  * Parse call sites from error instance.
  */
-function getErrorStack(error: Error): CallSite[] {
+function getErrorStack(
+  error: Error,
+  constructor: (...args: any[]) => any
+): CallSite[] {
   const prepareStackTrace = Error.prepareStackTrace;
   let trace: CallSite[];
 
@@ -39,7 +42,7 @@ function getErrorStack(error: Error): CallSite[] {
     return prepareStackTrace?.(error, v8Trace);
   };
 
-  Error.captureStackTrace(error, getErrorStack);
+  Error.captureStackTrace(error, constructor);
   error.stack; // Triggers `prepareStackTrace`.
   Error.prepareStackTrace = prepareStackTrace;
 
@@ -158,7 +161,10 @@ export class Sentry {
   /**
    * Sends the exception to Sentry and returns the `Response` promise.
    */
-  captureException(error: Error, options: CaptureExceptionOptions = {}) {
+  captureException(
+    error: Error,
+    options: CaptureExceptionOptions = {}
+  ): Promise<Response> {
     // https://develop.sentry.dev/sdk/event-payloads/
     const request = new Request(
       `https://sentry.io/api${this.sentryUrl.pathname}/store/`,
@@ -183,16 +189,18 @@ export class Sentry {
                 value: error.message,
                 // Ref: https://develop.sentry.dev/sdk/event-payloads/stacktrace
                 stacktrace: {
-                  frames: getErrorStack(error).map((callSite) => ({
-                    function: callSite.getFunctionName(),
-                    filename: this.filePrefix + callSite.getFileName(),
-                    lineno: callSite.getLineNumber(),
-                    colno: callSite.getColumnNumber(),
-                    in_app: !callSite.isNative(),
-                    vars: {
-                      this: String(callSite.getThis()),
-                    },
-                  })),
+                  frames: getErrorStack(error, this.captureException).map(
+                    (callSite) => ({
+                      function: callSite.getFunctionName(),
+                      filename: this.filePrefix + callSite.getFileName(),
+                      lineno: callSite.getLineNumber(),
+                      colno: callSite.getColumnNumber(),
+                      in_app: !callSite.isNative(),
+                      vars: {
+                        this: callSite.getTypeName(),
+                      },
+                    })
+                  ),
                 },
               },
             ],
