@@ -8,7 +8,7 @@ describe("worker sentry", () => {
 
   beforeEach(() => {
     fetch = jest.fn();
-    sentry = new Sentry({ dsn, fetch });
+    sentry = new Sentry({ dsn, fetch, filePrefix: "" });
   });
 
   describe("with 200 response", () => {

@@ -52,6 +52,7 @@ function getErrorStack(error: Error): CallSite[] {
 export interface SentryOptions {
   dsn: string;
   fetch?: Fetch;
+  filePrefix?: string;
 }
 
 /**
@@ -146,10 +147,12 @@ export interface CaptureExceptionOptions {
 export class Sentry {
   sentryUrl: URL;
   fetch: Fetch;
+  filePrefix: string;
 
   constructor(options: SentryOptions) {
     this.sentryUrl = new URL(options.dsn);
-    this.fetch = options.fetch || fetch.bind(null);
+    this.fetch = options.fetch ?? fetch.bind(null);
+    this.filePrefix = options.filePrefix ?? "~/";
   }
 
   /**
@@ -182,7 +185,7 @@ export class Sentry {
                 stacktrace: {
                   frames: getErrorStack(error).map((callSite) => ({
                     function: callSite.getFunctionName(),
-                    filename: callSite.getFileName(),
+                    filename: this.filePrefix + callSite.getFileName(),
                     lineno: callSite.getLineNumber(),
                     colno: callSite.getColumnNumber(),
                     in_app: !callSite.isNative(),
