@@ -23,7 +23,7 @@ const sentry = new Sentry({ dsn: "https://123@456.ingest.sentry.io/789" });
 addEventListener("fetch", (event) => {
   event.respondWith(
     handler(event.request).catch((err) => {
-      // Wait until the response from Sentry has resolved.
+      // Wait until the response from Sentry has resolved (will continue after return below)
       event.waitUntil(
         // Sends a request to Sentry and returns the response promise.
         sentry.captureException(err, {
@@ -33,6 +33,9 @@ addEventListener("fetch", (event) => {
           },
         })
       );
+
+      // response to original request while error is being logged (above)
+      return new Response(err.message || "Internal Error", { status: 500 });
     })
   );
 });
