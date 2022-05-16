@@ -27,6 +27,21 @@ interface CallSite {
   getPromiseIndex(): number | null;
 }
 
+declare global {
+  interface ErrorConstructor {
+    /**
+     * @see https://v8.dev/docs/stack-trace-api#customizing-stack-traces
+     */
+    prepareStackTrace?:
+      | ((err: Error, stackTraces: CallSite[]) => any)
+      | undefined;
+    captureStackTrace(
+      targetObject: object,
+      constructorOpt?: (...args: any[]) => any
+    ): void;
+  }
+}
+
 /**
  * Parse call sites from error instance.
  */
