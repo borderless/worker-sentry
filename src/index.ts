@@ -102,7 +102,7 @@ export interface CaptureExceptionOptions {
     /** The IP of the user. */
     ip?: string;
   };
-  /** A list of strings used to dictate the deduplication of this event. */
+  /** A list of strings used to dictate the de-duplication of this event. */
   fingerprint?: string[];
   /**
    * The Request interface contains information on a HTTP request related to the event.
@@ -220,6 +220,7 @@ export class Sentry {
             cookies: options.request?.cookies,
             env: options.request?.env,
           },
+          breadcrumbs: options.breadcrumbs,
           server_name: options.serverName,
           transaction: options.transaction,
           release: options.release,

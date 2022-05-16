@@ -21,6 +21,7 @@ describe("worker sentry", () => {
       const response = await sentry.captureException(new Error("Boom!"));
 
       expect(response.status).toEqual(200);
+      expect(fetch).toBeCalledTimes(1);
 
       const request = fetch.mock.calls[0][0];
 
@@ -37,6 +38,45 @@ describe("worker sentry", () => {
       expect(exception.type).toEqual("Error");
       expect(exception.value).toEqual("Boom!");
       expect(data.platform).toEqual("javascript");
+    });
+
+    it("should send all properties", async () => {
+      const response = await sentry.captureException(new Error("Boom!"), {
+        level: "error",
+        release: "test",
+        dist: "test",
+        fingerprint: [],
+        environment: "production",
+        serverName: "test",
+        breadcrumbs: [{ type: "error", message: "error" }],
+        transaction: "test",
+        tags: { test: "test" },
+        extra: { test: true },
+      });
+
+      expect(response.status).toEqual(200);
+      expect(fetch).toBeCalledTimes(1);
+
+      const request = fetch.mock.calls[0][0];
+      const data = await request.json();
+
+      expect(Object.keys(data)).toEqual([
+        "logger",
+        "platform",
+        "level",
+        "extra",
+        "fingerprint",
+        "exception",
+        "tags",
+        "user",
+        "request",
+        "breadcrumbs",
+        "server_name",
+        "transaction",
+        "release",
+        "dist",
+        "environment",
+      ]);
     });
   });
 });
