@@ -1,13 +1,14 @@
 import "cross-fetch/polyfill";
+import { describe, it, expect, beforeEach, jest } from "@jest/globals";
 import { Sentry } from "./index";
 
 describe("worker sentry", () => {
   const dsn = "https://123@456.ingest.sentry.io/789";
   let sentry: Sentry;
-  let fetch: jest.Mock;
+  let fetch: any;
 
   beforeEach(() => {
-    fetch = jest.fn();
+    fetch = jest.fn<() => Response>();
     sentry = new Sentry({ dsn, fetch, filePrefix: "" });
   });
 
@@ -28,8 +29,8 @@ describe("worker sentry", () => {
 
       const data = await request.json();
       const exception = data.exception.values[0];
-      const hasException = exception.stacktrace.frames.some(
-        (x: any) => x.filename === __filename
+      const hasException = exception.stacktrace.frames.some((x: any) =>
+        /[\\/]worker-sentry[\\/]/.test(x.filename)
       );
 
       expect(hasException).toEqual(true);

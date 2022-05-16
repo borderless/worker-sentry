@@ -1,23 +1,35 @@
 {
   "name": "@borderless/worker-sentry",
   "version": "1.1.1",
-  "description": "Sentry client for Cloudflare Workers using `fetch` and V8 stack traces",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
-  "files": [
-    "dist/"
-  ],
-  "scripts": {
-    "lint": "ts-scripts lint",
-    "format": "ts-scripts format",
-    "specs": "ts-scripts specs",
-    "test": "ts-scripts test",
-    "prepare": "ts-scripts install && ts-scripts build"
+  "publishConfig": {
+    "access": "public"
   },
+  "description": "Sentry client for Cloudflare Workers using `fetch` and V8 stack traces",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git://github.com/BorderlessLabs/worker-sentry.git"
   },
+  "author": {
+    "name": "Blake Embrey",
+    "email": "hello@blakeembrey.com",
+    "url": "http://blakeembrey.me"
+  },
+  "homepage": "https://github.com/BorderlessLabs/worker-sentry",
+  "bugs": {
+    "url": "https://github.com/BorderlessLabs/worker-sentry/issues"
+  },
+  "main": "dist/index.js",
+  "scripts": {
+    "format": "ts-scripts format",
+    "lint": "ts-scripts lint",
+    "prepare": "ts-scripts install && ts-scripts build",
+    "specs": "ts-scripts specs",
+    "test": "ts-scripts test"
+  },
+  "files": [
+    "dist/"
+  ],
   "keywords": [
     "worker",
     "fetch",
@@ -26,24 +38,11 @@
     "logging",
     "cloudflare"
   ],
-  "author": {
-    "name": "Blake Embrey",
-    "email": "hello@blakeembrey.com",
-    "url": "http://blakeembrey.me"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/BorderlessLabs/worker-sentry/issues"
-  },
-  "homepage": "https://github.com/BorderlessLabs/worker-sentry",
-  "publishConfig": {
-    "access": "public"
-  },
   "devDependencies": {
-    "@borderless/ts-scripts": "^0.0.9",
-    "@types/jest": "^26.0.16",
-    "@types/node": "^14.0.1",
+    "@borderless/ts-scripts": "^0.10.0",
+    "@jest/globals": "^28.1.0",
     "cross-fetch": "^3.0.6",
     "typescript": "^4.1.2"
-  }
+  },
+  "typings": "dist/index.d.ts"
 }
