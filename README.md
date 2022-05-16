@@ -2,8 +2,8 @@
 
 [![NPM version][npm-image]][npm-url]
 [![NPM downloads][downloads-image]][downloads-url]
-[![Build status][travis-image]][travis-url]
-[![Test coverage][coveralls-image]][coveralls-url]
+[![Build status][build-image]][build-url]
+[![Build coverage][coverage-image]][coverage-url]
 
 > Sentry client for Cloudflare Workers using `fetch` and native [V8 stack traces](https://v8.dev/docs/stack-trace-api).
 
@@ -46,11 +46,11 @@ addEventListener("fetch", (event) => {
 
 MIT
 
-[npm-image]: https://img.shields.io/npm/v/@borderless/worker-sentry.svg?style=flat
+[npm-image]: https://img.shields.io/npm/v/@borderless/worker-sentry
 [npm-url]: https://npmjs.org/package/@borderless/worker-sentry
-[downloads-image]: https://img.shields.io/npm/dm/@borderless/worker-sentry.svg?style=flat
+[downloads-image]: https://img.shields.io/npm/dm/@borderless/worker-sentry
 [downloads-url]: https://npmjs.org/package/@borderless/worker-sentry
-[travis-image]: https://img.shields.io/travis/BorderlessLabs/worker-sentry.svg?style=flat
-[travis-url]: https://travis-ci.org/BorderlessLabs/worker-sentry
-[coveralls-image]: https://img.shields.io/coveralls/BorderlessLabs/worker-sentry.svg?style=flat
-[coveralls-url]: https://coveralls.io/r/BorderlessLabs/worker-sentry?branch=master
+[build-image]: https://img.shields.io/github/workflow/status/borderless/worker-sentry/CI/main
+[build-url]: https://github.com/borderless/worker-sentry/actions/workflows/ci.yml?query=branch%3Amain
+[coverage-image]: https://img.shields.io/codecov/c/gh/borderless/worker-sentry
+[coverage-url]: https://codecov.io/gh/borderless/worker-sentry
